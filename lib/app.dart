@@ -15,7 +15,6 @@ class WhatsAppCloneApp extends StatelessWidget {
       child: Consumer<SettingsVM>(
         builder: (context, settingsVM, child) {
           return MaterialApp(
-            title: 'WhatsApp Clone',
             theme: AppTheme.lightTheme,
             darkTheme: AppTheme.darkTheme,
             themeMode: settingsVM.themeMode,

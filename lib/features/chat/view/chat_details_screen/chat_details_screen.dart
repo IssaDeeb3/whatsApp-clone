@@ -6,7 +6,6 @@ import 'package:whatsapp_clone/core/resources/app_gaps.dart';
 import 'package:whatsapp_clone/core/resources/app_spaces.dart';
 import 'package:whatsapp_clone/core/resources/asstes.dart';
 import 'package:whatsapp_clone/core/theme/app_colors.dart';
-import 'package:whatsapp_clone/features/chat/models/message_model.dart';
 import 'package:whatsapp_clone/features/chat/view/chat_details_screen/widgets/message_widget.dart';
 import 'package:whatsapp_clone/features/chat/view_model/chat_view_model.dart';
 import '../../models/chat_model.dart';
@@ -61,13 +60,15 @@ class ChatDetailsScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              actions: const [
+              actions: [
                 Icon(Icons.videocam_outlined),
-                SizedBox(width: 10),
+                horizontalSpace(10),
+
                 Icon(Icons.call),
-                SizedBox(width: 10),
+                horizontalSpace(10),
+
                 Icon(Icons.more_vert),
-                SizedBox(width: 5),
+                horizontalSpace(5),
               ],
             ),
             body: Stack(
@@ -111,20 +112,21 @@ class ChatDetailsScreen extends StatelessWidget {
                           decoration: InputDecoration(
                             filled: true,
                             fillColor: context.isDark
-                                ? AppColors.darkSearchBarGreyColor
+                                ? AppColors.darkMessageReceiverColor
                                 : AppColors.whiteColor,
                             hintText: 'Type a message',
                             hintStyle: context.textTheme.labelMedium?.copyWith(
                               color: context.isDark
-                                  ? AppColors.lightSearchBarGreyColor
+                                  ? AppColors.whiteColor
                                   : AppColors.darkSearchBarGreyColor,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(30),
                               borderSide: BorderSide.none,
                             ),
-                            prefixIcon: const Icon(
+                            prefixIcon: Icon(
                               Icons.sticky_note_2_outlined,
+                              color: context.theme.primaryColor,
                             ),
                             suffixIcon: Padding(
                               padding: const EdgeInsets.symmetric(
@@ -132,11 +134,18 @@ class ChatDetailsScreen extends StatelessWidget {
                               ),
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
-                                children: const [
-                                  Icon(Icons.attach_file),
-                                  SizedBox(width: 10),
-                                  Icon(Icons.camera_alt_outlined),
-                                  SizedBox(width: 8),
+                                children: [
+                                  Icon(
+                                    Icons.attach_file,
+                                    color: context.theme.primaryColor,
+                                  ),
+                                  horizontalSpace(10),
+
+                                  Icon(
+                                    Icons.camera_alt_outlined,
+                                    color: context.theme.primaryColor,
+                                  ),
+                                  horizontalSpace(5),
                                 ],
                               ),
                             ),

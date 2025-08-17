@@ -32,8 +32,14 @@ class ChatVM extends ChangeNotifier {
     controller.clear();
     _isTyping = false;
     notifyListeners();
-    Future.delayed(const Duration(milliseconds: 100), () {
-      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    Future.delayed(const Duration(milliseconds: 300), () {
+      if (scrollController.hasClients) {
+        scrollController.animateTo(
+          scrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+        );
+      }
     });
   }
 }

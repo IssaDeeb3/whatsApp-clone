@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/core/extensions/context_extension.dart';
 import 'package:whatsapp_clone/core/theme/app_colors.dart';
 import 'package:whatsapp_clone/core/theme/app_text_styles.dart';
+import 'package:whatsapp_clone/features/settings/view/settings_screen.dart';
 import 'package:whatsapp_clone/features/settings/view_model/settings_view_model.dart';
 
 import '../../view_model/bottom_nav_bar_view_model.dart';
@@ -38,7 +39,71 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
             if (currentIndex == 1 || currentIndex == 3)
               IconButton(icon: const Icon(Icons.search), onPressed: () {}),
 
-            IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
+            PopupMenuButton(
+              color: context.theme.scaffoldBackgroundColor,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+
+              itemBuilder: (context) {
+                return [
+                  PopupMenuItem(
+                    value: '1',
+                    child: Text(
+                      'New group',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: '2',
+                    child: Text(
+                      'New Community',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: '3',
+                    child: Text(
+                      'New broadcast',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: '4',
+                    child: Text(
+                      'Link devices',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+                  PopupMenuItem(
+                    value: '5',
+                    child: Text('Starred', style: context.textTheme.labelSmall),
+                  ),
+                  PopupMenuItem(
+                    value: '6',
+                    child: Text(
+                      'Read all',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+
+                  PopupMenuItem(
+                    onTap: () {
+                      context.to(SettingsScreen());
+                    },
+                    value: '7',
+                    child: Text(
+                      'Settings',
+                      style: context.textTheme.labelSmall,
+                    ),
+                  ),
+                ];
+              },
+            ),
+
+            // IconButton(icon: const Icon(Icons.more_vert), onPressed: () {
+            //
+            // }),
           ],
         );
       },
@@ -47,174 +112,4 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class SettingsScreen extends StatelessWidget {
-  const SettingsScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
-
-    return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(
-      //     'Settings',
-      //     style: AppTextStyles.heading.copyWith(
-      //       color: isDarkMode ? Colors.white : Colors.black,
-      //       fontSize: 20,
-      //       fontWeight: FontWeight.w500,
-      //     ),
-      //   ),
-      //   leading: IconButton(
-      //     icon: const Icon(Icons.arrow_back),
-      //     onPressed: () => Navigator.pop(context),
-      //   ),
-      // ),
-      body: SizedBox(),
-
-      // ListView(
-      //   children: [
-      //     const SizedBox(height: 20),
-      //     ListTile(
-      //       leading: const CircleAvatar(
-      //         radius: 30,
-      //         backgroundColor: Colors.grey,
-      //         child: Icon(Icons.person, size: 40, color: Colors.white),
-      //       ),
-      //       title: Text('Your Name', style: AppTextStyles.chatTitle),
-      //       subtitle: Text('Status message', style: AppTextStyles.chatSubtitle),
-      //     ),
-      //     const Divider(),
-      //     ListTile(
-      //       leading: Container(
-      //         padding: const EdgeInsets.all(10),
-      //         decoration: BoxDecoration(
-      //           color: Colors.green[100],
-      //           shape: BoxShape.circle,
-      //         ),
-      //         child: const Icon(Icons.key, color: AppColors.primaryColor),
-      //       ),
-      //       title: Text('Account', style: AppTextStyles.chatTitle),
-      //       subtitle: Text(
-      //         'Privacy, security, change number',
-      //         style: AppTextStyles.chatSubtitle,
-      //       ),
-      //     ),
-      //     ListTile(
-      //       leading: Container(
-      //         padding: const EdgeInsets.all(10),
-      //         decoration: BoxDecoration(
-      //           color: Colors.green[100],
-      //           shape: BoxShape.circle,
-      //         ),
-      //         child: const Icon(Icons.chat, color: AppColors.primaryColor),
-      //       ),
-      //       title: Text('Chats', style: AppTextStyles.chatTitle),
-      //       subtitle: Text(
-      //         'Theme, wallpapers, chat history',
-      //         style: AppTextStyles.chatSubtitle,
-      //       ),
-      //     ),
-      //     ListTile(
-      //       leading: Container(
-      //         padding: const EdgeInsets.all(10),
-      //         decoration: BoxDecoration(
-      //           color: Colors.green[100],
-      //           shape: BoxShape.circle,
-      //         ),
-      //         child: const Icon(
-      //           Icons.notifications,
-      //           color: AppColors.primaryColor,
-      //         ),
-      //       ),
-      //       title: Text('Notifications', style: AppTextStyles.chatTitle),
-      //       subtitle: Text(
-      //         'Message, group & call tones',
-      //         style: AppTextStyles.chatSubtitle,
-      //       ),
-      //     ),
-      //     ListTile(
-      //       leading: Container(
-      //         padding: const EdgeInsets.all(10),
-      //         decoration: BoxDecoration(
-      //           color: Colors.green[100],
-      //           shape: BoxShape.circle,
-      //         ),
-      //         child: const Icon(
-      //           Icons.brightness_6,
-      //           color: AppColors.primaryColor,
-      //         ),
-      //       ),
-      //       title: Text('Theme', style: AppTextStyles.chatTitle),
-      //       subtitle: Text(
-      //         'Change app appearance',
-      //         style: AppTextStyles.chatSubtitle,
-      //       ),
-      //       onTap: () => _showThemeDialog(context),
-      //     ),
-      //   ],
-      // ),
-    );
-  }
-
-  // void _showThemeDialog(BuildContext context) {
-  //   final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
-  //
-  //   showDialog(
-  //     context: context,
-  //     builder: (context) {
-  //       return StatefulBuilder(
-  //         builder: (context, setState) {
-  //           return AlertDialog(
-  //             title: const Text('Choose Theme'),
-  //             content: Column(
-  //               mainAxisSize: MainAxisSize.min,
-  //               children: [
-  //                 RadioListTile<AppThemeMode>(
-  //                   title: const Text('System default'),
-  //                   value: AppThemeMode.system,
-  //                   groupValue: themeProvider.themeMode,
-  //                   onChanged: (value) {
-  //                     setState(() {
-  //                       themeProvider.setThemeMode(value!);
-  //                     });
-  //                   },
-  //                 ),
-  //                 RadioListTile<AppThemeMode>(
-  //                   title: const Text('Light'),
-  //                   value: AppThemeMode.light,
-  //                   groupValue: themeProvider.themeMode,
-  //                   onChanged: (value) {
-  //                     setState(() {
-  //                       themeProvider.setThemeMode(value!);
-  //                     });
-  //                   },
-  //                 ),
-  //                 RadioListTile<AppThemeMode>(
-  //                   title: const Text('Dark'),
-  //                   value: AppThemeMode.dark,
-  //                   groupValue: themeProvider.themeMode,
-  //                   onChanged: (value) {
-  //                     setState(() {
-  //                       themeProvider.setThemeMode(value!);
-  //                     });
-  //                   },
-  //                 ),
-  //               ],
-  //             ),
-  //             actions: [
-  //               TextButton(
-  //                 onPressed: () {
-  //                   Navigator.of(context).pop();
-  //                 },
-  //                 child: const Text('OK'),
-  //               ),
-  //             ],
-  //           );
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 }
