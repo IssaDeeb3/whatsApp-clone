@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:whatsapp_clone/core/extensions/context_extension.dart';
 import 'package:whatsapp_clone/core/resources/app_gaps.dart';
+import 'package:whatsapp_clone/core/resources/app_spaces.dart';
+import 'package:whatsapp_clone/core/resources/asstes.dart';
 import 'package:whatsapp_clone/core/theme/app_colors.dart';
 import 'package:whatsapp_clone/features/chat/models/message_model.dart';
+import 'package:whatsapp_clone/features/chat/view/chat_details_screen/widgets/message_widget.dart';
+import 'package:whatsapp_clone/features/chat/view_model/chat_view_model.dart';
 import '../../models/chat_model.dart';
 
 class ChatDetailsScreen extends StatelessWidget {
@@ -13,80 +18,150 @@ class ChatDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          children: [
-            CircleAvatar(
-              radius: 20.r,
-              backgroundColor: AppColors.darkGreyColor,
-              child: Text(
-                chat.user.name[0].toUpperCase(),
-                style: TextStyle(color: Colors.white, fontSize: 16.sp),
-              ),
-            ),
-            horizontalSpace(12),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  chat.user.name,
-                  style: context.textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.w600,
+    return ChangeNotifierProvider(
+      create: (_) => ChatVM(chat),
+      child: Consumer<ChatVM>(
+        builder: (context, chatVM, _) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            if (chatVM.scrollController.hasClients) {
+              chatVM.scrollController.jumpTo(
+                chatVM.scrollController.position.maxScrollExtent,
+              );
+            }
+          });
+          return Scaffold(
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              title: Row(
+                children: [
+                  InkWell(
+                    onTap: () => context.back(),
+                    child: const Icon(Icons.arrow_back),
                   ),
-                ),
-              ],
-            ),
-          ],
-        ),
-        actions: [
-          IconButton(icon: const Icon(Icons.videocam), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.call), onPressed: () {}),
-          IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
-        ],
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(16.w),
-              child: Center(
-                child: Text(
-                  'Chat with ${chat.user.name}',
-                  style: context.textTheme.titleLarge?.copyWith(
-                    color: AppColors.darkGreyColor,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(16.w),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Type a message',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(25.r),
-                      ),
-                      contentPadding: EdgeInsets.symmetric(
-                        horizontal: 16.w,
-                        vertical: 12.h,
-                      ),
+                  horizontalSpace(5),
+                  Container(
+                    width: 40.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: AppColors.lightGreyColor,
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(100),
+                      child: Image.network(chat.user.profilePictureUrl ?? ''),
                     ),
                   ),
+                  horizontalSpace(10),
+                  Text(
+                    chat.user.name,
+                    style: context.textTheme.labelSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ],
+              ),
+              actions: const [
+                Icon(Icons.videocam_outlined),
+                SizedBox(width: 10),
+                Icon(Icons.call),
+                SizedBox(width: 10),
+                Icon(Icons.more_vert),
+                SizedBox(width: 5),
+              ],
+            ),
+            body: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Positioned.fill(
+                  child: Image.asset(
+                    context.isDark ? Assets.darkChatBg : Assets.lightChatBg,
+                    opacity: AlwaysStoppedAnimation(context.isDark ? .6 : 0.17),
+                    fit: BoxFit.cover,
+                  ),
                 ),
-                horizontalSpace(8),
-                CircleAvatar(
-                  backgroundColor: context.theme.primaryColor,
-                  child: const Icon(Icons.send, color: Colors.white),
+                AnimatedList(
+                  key: chatVM.listKey,
+                  controller: chatVM.scrollController,
+                  padding: EdgeInsets.only(
+                    right: AppSpaces.appPadding,
+                    left: AppSpaces.appPadding,
+                    bottom: 80.h,
+                  ),
+                  initialItemCount: chatVM.messages.length,
+                  itemBuilder: (context, index, animation) {
+                    final message = chatVM.messages[index];
+                    return SizeTransition(
+                      sizeFactor: animation,
+                      child: MessageWidget(message: message),
+                    );
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 20.h,
+                    horizontal: 8.w,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: chatVM.controller,
+                          onChanged: chatVM.onTextChanged,
+                          decoration: InputDecoration(
+                            filled: true,
+                            fillColor: context.isDark
+                                ? AppColors.darkSearchBarGreyColor
+                                : AppColors.whiteColor,
+                            hintText: 'Type a message',
+                            hintStyle: context.textTheme.labelMedium?.copyWith(
+                              color: context.isDark
+                                  ? AppColors.lightSearchBarGreyColor
+                                  : AppColors.darkSearchBarGreyColor,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(30),
+                              borderSide: BorderSide.none,
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.sticky_note_2_outlined,
+                            ),
+                            suffixIcon: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 10,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: const [
+                                  Icon(Icons.attach_file),
+                                  SizedBox(width: 10),
+                                  Icon(Icons.camera_alt_outlined),
+                                  SizedBox(width: 8),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      horizontalSpace(10),
+                      GestureDetector(
+                        onTap: chatVM.isTyping ? chatVM.sendMessage : null,
+                        child: CircleAvatar(
+                          backgroundColor: AppColors.primaryColor,
+                          radius: 22.r,
+                          child: Icon(
+                            chatVM.isTyping ? Icons.send : Icons.mic,
+                            color: context.isDark ? Colors.black : Colors.white,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

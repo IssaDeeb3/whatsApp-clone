@@ -8,9 +8,6 @@ import 'package:whatsapp_clone/core/theme/app_colors.dart';
 import 'package:whatsapp_clone/features/chat/view/chat_screen/widgets/chat_list_widget.dart';
 import 'package:whatsapp_clone/features/chat/view/chat_screen/widgets/chat_tab_bar_widget.dart';
 
-import '../../../../core/theme/app_text_styles.dart';
-import '../../models/message_model.dart';
-
 class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
@@ -18,6 +15,7 @@ class ChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
+        verticalSpace(10),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: AppSpaces.appPadding),
 
@@ -52,9 +50,9 @@ class ChatScreen extends StatelessWidget {
                       horizontalSpace(20),
                       Text(
                         'Archived',
-                        style: context.textTheme.labelLarge?.copyWith(
+                        style: context.textTheme.labelMedium?.copyWith(
                           color: AppColors.darkGreyColor,
-                          fontWeight: FontWeight.w500,
+                          fontWeight: FontWeight.w600,
                         ),
                       ),
                     ],
@@ -62,9 +60,9 @@ class ChatScreen extends StatelessWidget {
 
                   Text(
                     '6',
-                    style: context.textTheme.labelLarge?.copyWith(
+                    style: context.textTheme.labelMedium?.copyWith(
                       color: AppColors.darkGreyColor,
-                      fontWeight: FontWeight.w500,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ],
@@ -76,18 +74,5 @@ class ChatScreen extends StatelessWidget {
         ),
       ],
     );
-  }
-
-  String _formatTime(DateTime dateTime) {
-    final now = DateTime.now();
-    final difference = now.difference(dateTime);
-
-    if (difference.inDays > 0) {
-      return '${difference.inDays}d';
-    } else if (difference.inHours > 0) {
-      return '${difference.inHours}h';
-    } else {
-      return '${difference.inMinutes}m';
-    }
   }
 }

@@ -6,12 +6,15 @@ import 'app_text_styles.dart';
 class AppTheme {
   static ThemeData get lightTheme => ThemeData(
     splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
     brightness: Brightness.light,
     scaffoldBackgroundColor: AppColors.lightScaffoldBackgroundColor,
     primaryColor: AppColors.blackColor,
     useMaterial3: true,
     fontFamily: GoogleFonts.poppins().fontFamily,
     appBarTheme: AppBarTheme(
+      surfaceTintColor: Colors.transparent,
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.black,
       iconTheme: IconThemeData(color: Colors.black),
@@ -52,7 +55,7 @@ class AppTheme {
       unselectedLabelStyle: TextStyle(
         fontSize: 14,
         color: Colors.black,
-        fontWeight: FontWeight.w400,
+        fontWeight: FontWeight.w500,
       ),
       unselectedItemColor: Colors.black,
       showUnselectedLabels: true,
@@ -87,10 +90,26 @@ class AppTheme {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        elevation: WidgetStateProperty.all(0),
+
+        backgroundColor: WidgetStateProperty.all(AppColors.primaryColor),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        ),
+        textStyle: WidgetStateProperty.all(
+          AppTextStyles.labelMedium.copyWith(fontWeight: FontWeight.w400),
+        ),
+      ),
+    ),
   );
 
   static ThemeData get darkTheme => ThemeData(
     splashFactory: NoSplash.splashFactory,
+    splashColor: Colors.transparent,
+    highlightColor: Colors.transparent,
     brightness: Brightness.dark,
     useMaterial3: true,
     fontFamily: GoogleFonts.poppins().fontFamily,
@@ -99,6 +118,8 @@ class AppTheme {
     primaryColor: AppColors.whiteColor,
 
     appBarTheme: AppBarTheme(
+      surfaceTintColor: Colors.transparent,
+
       backgroundColor: Colors.transparent,
       foregroundColor: Colors.white,
       iconTheme: IconThemeData(color: Colors.white),
@@ -176,6 +197,20 @@ class AppTheme {
       color: Color(0xFF1E2428),
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ButtonStyle(
+        elevation: WidgetStateProperty.all(0),
+        backgroundColor: WidgetStateProperty.all(AppColors.primaryColor),
+        foregroundColor: WidgetStateProperty.all(Colors.white),
+        shape: WidgetStateProperty.all(
+          RoundedRectangleBorder(borderRadius: BorderRadius.circular(100)),
+        ),
+        textStyle: WidgetStateProperty.all(
+          AppTextStyles.labelMedium.copyWith(fontWeight: FontWeight.w400),
+        ),
+      ),
     ),
   );
 }

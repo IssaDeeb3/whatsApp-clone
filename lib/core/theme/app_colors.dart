@@ -50,4 +50,13 @@ class AppColors {
   static const Color darkChatTabBarBorderColor = Color(0xFF21262A);
   static const Color darkChatTabBarSelectedTextColor = Color(0xFFDAFFE0);
   static const Color darkChatTabBarUnselectedTextColor = Color(0xFF939B9E);
+
+  // * Message Colors
+  //! Light Message Colors -----------
+  static const Color lightMessageSenderColor = Color(0xFFD8FDD2);
+  static const Color lightMessageReceiverColor = Color(0xFFffffff);
+
+  //! Dark Message Colors -----------
+  static const Color darkMessageSenderColor = Color(0xFF134D37);
+  static const Color darkMessageReceiverColor = Color(0xFF1F272A);
 }

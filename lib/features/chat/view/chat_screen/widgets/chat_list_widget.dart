@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
@@ -15,6 +14,7 @@ class ChatListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+      padding: EdgeInsets.only(bottom: 50.h),
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: ChatModel.chatList.length,
@@ -41,40 +41,43 @@ class ChatListCardWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.h),
         child: Row(
           children: [
-            CircleAvatar(
-              radius: 25.r,
-              backgroundColor: AppColors.darkGreyColor,
-              child: Text(
-                chat.user.name[0].toUpperCase(),
-                style: TextStyle(color: Colors.white, fontSize: 18.sp),
+            Container(
+              width: 50.w,
+              height: 50.h,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.lightGreyColor,
+              ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(100),
+                child: Image.network(chat.user.profilePictureUrl ?? ''),
               ),
             ),
-            horizontalSpace(15),
-            Expanded(
+            horizontalSpace(10),
+
+            Flexible(
+              flex: 2,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        chat.user.name,
-                        style: context.textTheme.titleMedium?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                      Text(
-                        DateFormat("hh:mm a").format((chat.lastMessageTime)),
-                        style: context.textTheme.bodySmall?.copyWith(
-                          color: AppColors.darkGreyColor,
-                        ),
-                      ),
-                    ],
+                  Text(
+                    chat.user.name,
+                    style: context.textTheme.labelMedium?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+                    overflow: TextOverflow.ellipsis,
                   ),
-                  verticalSpace(4),
+                  verticalSpace(5),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      if (chat.isFromMe) ...[
+                        Icon(
+                          Icons.check,
+                          color: AppColors.darkGreyColor,
+                          size: 16.r,
+                        ),
+                        horizontalSpace(5),
+                      ],
                       Expanded(
                         child: Text(
                           chat.lastMessage,
@@ -85,26 +88,54 @@ class ChatListCardWidget extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      if (chat.hasUnreadMessages)
-                        Container(
-                          padding: EdgeInsets.all(6.r),
-                          decoration: BoxDecoration(
-                            color: context.theme.primaryColor,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Text(
-                            2.toString(), // Replace with actual unread count
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 12.sp,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
                     ],
                   ),
                 ],
               ),
+            ),
+
+            horizontalSpace(8),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  DateFormat("hh:mm a").format(chat.lastMessageTime),
+                  style: context.textTheme.bodySmall?.copyWith(
+                    color: chat.isUnread
+                        ? AppColors.floatingActionButtonColor
+                        : AppColors.darkGreyColor,
+                    fontWeight: chat.isUnread
+                        ? FontWeight.w600
+                        : FontWeight.normal,
+                  ),
+                ),
+                verticalSpace(10),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (chat.isPinned)
+                      Icon(
+                        Icons.push_pin,
+                        color: AppColors.darkGreyColor,
+                        size: 20.r,
+                      ),
+                    if (chat.isPinned) horizontalSpace(5),
+                    if (chat.hasUnreadMessages)
+                      CircleAvatar(
+                        backgroundColor: AppColors.floatingActionButtonColor,
+                        radius: 10.r,
+                        child: Text(
+                          chat.unreadCount.toString(),
+                          style: context.textTheme.labelSmall?.copyWith(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

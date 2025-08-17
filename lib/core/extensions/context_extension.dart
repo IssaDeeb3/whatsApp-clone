@@ -4,6 +4,12 @@ import 'package:whatsapp_clone/core/theme/app_colors.dart';
 import '../data/local/get_storage.dart';
 import '../data/local/local_keys.dart';
 
+extension MediaQueryExtensions on BuildContext {
+  double get screenWidth => MediaQuery.of(this).size.width;
+
+  double get screenHeight => MediaQuery.of(this).size.height;
+}
+
 extension ThemeExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
 

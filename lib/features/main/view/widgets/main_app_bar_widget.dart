@@ -21,33 +21,23 @@ class MainAppBar extends StatelessWidget implements PreferredSizeWidget {
     return Consumer<SettingsVM>(
       builder: (context, settingsVM, child) {
         return AppBar(
-          title: Column(
-            children: [
-              Text(
-                title,
-                style: context.theme.appBarTheme.titleTextStyle?.copyWith(
-                  color: currentIndex == 0 ? null : context.theme.primaryColor,
-                  fontWeight: currentIndex == 0
-                      ? FontWeight.w600
-                      : FontWeight.w200,
-                ),
-              ),
-              DropdownButton(
-                items: ThemeMode.values
-                    .map((e) => DropdownMenuItem(value: e, child: Text(e.name)))
-                    .toList(),
-                onChanged: (value) {
-                  settingsVM.changeAppMode(value);
-                },
-              ),
-            ],
+          title: Text(
+            title,
+            style: context.theme.appBarTheme.titleTextStyle?.copyWith(
+              color: currentIndex == 0 ? null : context.theme.primaryColor,
+              fontWeight: currentIndex == 0 ? FontWeight.w600 : FontWeight.w200,
+            ),
           ),
 
           actions: [
-            IconButton(
-              icon: const Icon(Icons.camera_alt_outlined),
-              onPressed: () {},
-            ),
+            if (currentIndex == 0)
+              IconButton(
+                icon: const Icon(Icons.camera_alt_outlined),
+                onPressed: () {},
+              ),
+            if (currentIndex == 1 || currentIndex == 3)
+              IconButton(icon: const Icon(Icons.search), onPressed: () {}),
+
             IconButton(icon: const Icon(Icons.more_vert), onPressed: () {}),
           ],
         );
