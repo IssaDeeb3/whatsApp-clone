@@ -6,6 +6,8 @@ import '../data/local/local_keys.dart';
 
 extension ThemeExtensions on BuildContext {
   ThemeData get theme => Theme.of(this);
+
+  TextTheme get textTheme => Theme.of(this).textTheme;
 }
 
 extension NavigationExtensions on BuildContext {

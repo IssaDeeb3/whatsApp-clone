@@ -8,7 +8,7 @@ import 'package:whatsapp_clone/features/main/view/widgets/main_bottom_nav_bar_wi
 import 'package:whatsapp_clone/features/main/view_model/bottom_nav_bar_view_model.dart';
 import 'package:whatsapp_clone/features/updates/view/updates_screen.dart';
 import '../../../core/theme/app_text_styles.dart';
-import '../../chat/view/chat_screen.dart';
+import '../../chat/view/chat_screen/chat_screen.dart';
 import '../model/floating_action_button_model.dart';
 
 class MainScreen extends StatelessWidget {

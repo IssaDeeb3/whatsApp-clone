@@ -69,6 +69,16 @@ class AppTheme {
         AppColors.lightSearchBarColor,
       ),
     ),
+    tabBarTheme: TabBarThemeData(
+      labelStyle: AppTextStyles.labelMedium.copyWith(
+        color: AppColors.lightChatTabBarSelectedTextColor,
+        fontWeight: FontWeight.w600,
+      ),
+      unselectedLabelStyle: AppTextStyles.labelMedium.copyWith(
+        color: AppColors.lightChatTabBarUnselectedTextColor,
+        fontWeight: FontWeight.w400,
+      ),
+    ),
 
     dialogTheme: DialogThemeData(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
@@ -135,6 +145,28 @@ class AppTheme {
       unselectedItemColor: Colors.white,
       showUnselectedLabels: true,
       showSelectedLabels: true,
+    ),
+
+    searchBarTheme: SearchBarThemeData(
+      elevation: WidgetStateProperty.all(0),
+      hintStyle: WidgetStateProperty.all<TextStyle>(
+        AppTextStyles.labelMedium.copyWith(
+          color: AppColors.darkSearchBarGreyColor,
+        ),
+      ),
+      backgroundColor: WidgetStateProperty.all<Color>(
+        AppColors.darkSearchBarColor,
+      ),
+    ),
+    tabBarTheme: TabBarThemeData(
+      labelStyle: AppTextStyles.labelMedium.copyWith(
+        color: AppColors.darkChatTabBarSelectedTextColor,
+        fontWeight: FontWeight.w600,
+      ),
+      unselectedLabelStyle: AppTextStyles.labelMedium.copyWith(
+        color: AppColors.darkChatTabBarUnselectedTextColor,
+        fontWeight: FontWeight.w400,
+      ),
     ),
     dialogTheme: DialogThemeData(
       backgroundColor: Color(0xFF1E2428),
