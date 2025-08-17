@@ -56,9 +56,9 @@ class MainScreen extends StatelessWidget {
       case 0:
         return const ChatScreen();
       case 1:
-        return const CommunitiesScreen();
-      case 2:
         return const UpdatesScreen();
+      case 2:
+        return const CommunitiesScreen();
       case 3:
         return const CallsScreen();
       default:

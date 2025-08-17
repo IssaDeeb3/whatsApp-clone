@@ -21,7 +21,7 @@ class ChatDetailsScreen extends StatelessWidget {
               radius: 20.r,
               backgroundColor: AppColors.darkGreyColor,
               child: Text(
-                chat.name[0].toUpperCase(),
+                chat.user.name[0].toUpperCase(),
                 style: TextStyle(color: Colors.white, fontSize: 16.sp),
               ),
             ),
@@ -30,7 +30,7 @@ class ChatDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  chat.name,
+                  chat.user.name,
                   style: context.textTheme.titleMedium?.copyWith(
                     fontWeight: FontWeight.w600,
                   ),
@@ -52,7 +52,7 @@ class ChatDetailsScreen extends StatelessWidget {
               padding: EdgeInsets.all(16.w),
               child: Center(
                 child: Text(
-                  'Chat with ${chat.name}',
+                  'Chat with ${chat.user.name}',
                   style: context.textTheme.titleLarge?.copyWith(
                     color: AppColors.darkGreyColor,
                   ),

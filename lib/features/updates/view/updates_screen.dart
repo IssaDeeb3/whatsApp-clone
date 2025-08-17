@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:whatsapp_clone/core/extensions/context_extension.dart';
+import 'package:whatsapp_clone/core/resources/app_spaces.dart';
+import 'package:whatsapp_clone/features/updates/view/widgets/updates_list.dart';
 
 class UpdatesScreen extends StatelessWidget {
   const UpdatesScreen({super.key});
@@ -6,11 +9,9 @@ class UpdatesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
+      padding: EdgeInsets.all(AppSpaces.appPadding),
       children: [
-        Padding(
-          padding: EdgeInsets.all(16.0),
-          child: Text('Status', style: Theme.of(context).textTheme.labelLarge),
-        ),
+        Text('Status', style: context.textTheme.labelLarge),
         ListTile(
           leading: Stack(
             children: [
@@ -47,38 +48,7 @@ class UpdatesScreen extends StatelessWidget {
             style: TextStyle(fontWeight: FontWeight.bold, color: Colors.grey),
           ),
         ),
-        ListTile(
-          leading: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.green, width: 2),
-            ),
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://randomuser.me/api/portraits/men/1.jpg',
-              ),
-            ),
-          ),
-          title: const Text('John Doe'),
-          subtitle: const Text('Today, 10:30 AM'),
-          onTap: () {},
-        ),
-        ListTile(
-          leading: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(color: Colors.green, width: 2),
-            ),
-            child: const CircleAvatar(
-              backgroundImage: NetworkImage(
-                'https://randomuser.me/api/portraits/women/1.jpg',
-              ),
-            ),
-          ),
-          title: const Text('Jane Smith'),
-          subtitle: const Text('Today, 9:15 AM'),
-          onTap: () {},
-        ),
+        UpdatesList(),
       ],
     );
   }

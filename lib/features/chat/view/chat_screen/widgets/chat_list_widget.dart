@@ -45,7 +45,7 @@ class ChatListCardWidget extends StatelessWidget {
               radius: 25.r,
               backgroundColor: AppColors.darkGreyColor,
               child: Text(
-                chat.name[0].toUpperCase(),
+                chat.user.name[0].toUpperCase(),
                 style: TextStyle(color: Colors.white, fontSize: 18.sp),
               ),
             ),
@@ -58,7 +58,7 @@ class ChatListCardWidget extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        chat.name,
+                        chat.user.name,
                         style: context.textTheme.titleMedium?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),
